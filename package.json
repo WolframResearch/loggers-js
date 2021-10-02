@@ -9,7 +9,8 @@
     "README.md"
   ],
   "scripts": {
-    "prepublishOnly": "tsc"
+    "prepublishOnly": "tsc",
+    "build": "tsc"
   },
   "devDependencies": {
     "@types/node": "^16.10.2",
