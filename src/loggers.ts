@@ -28,7 +28,8 @@
 
 import _ from 'underscore';
 import {contains, trim} from 'underscore.string';
-import globals, {now} from 'globals';
+import process from 'process';
+import globals, {now} from './globals';
 
 import {getLocationParams} from './locationParams';
 
