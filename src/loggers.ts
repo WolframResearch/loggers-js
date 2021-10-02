@@ -24,7 +24,7 @@
  * // <notebookURL>?loggers=boxes=debug
  */
 
-import {each, contains, map, toArray, without} from 'lodash';
+import {each, includes, map, toArray, without} from 'lodash';
 import {contains as stringContains, trim} from 'underscore.string';
 import process from 'process';
 import globals, {now} from './globals';
@@ -99,7 +99,7 @@ function levelFromNumber(value) {
     return levelNames[value - 1];
 }
 
-if (contains(['LOCAL', 'LOCAL8080', 'DEVEL'], globals.serverCategory)) {
+if (includes(['LOCAL', 'LOCAL8080', 'DEVEL'], globals.serverCategory)) {
     // On devel and localhost, set the logging level to "info".
     // Individual loggers still have to be enabled for messages to actually show up.
     logLevel = levelToNumber('info');
@@ -171,7 +171,7 @@ class Logger {
      */
     constructor(name, options: Options = {}) {
         this.name = name || '';
-        this.enabled = contains(enabledLoggers, name);
+        this.enabled = includes(enabledLoggers, name);
         this.level = levelToNumber(options.level || 'log');
         this.pendingAsyncCalls = [];
         this.logLevel = enabledLoggerLevels[name] || null;
