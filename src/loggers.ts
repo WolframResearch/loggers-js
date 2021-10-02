@@ -1,29 +1,3 @@
-/**
- * A JavaScript logging framework.
- * Supports different named loggers (which can be enabled or disabled individually),
- * and different (global) logging levels.
- * @module logger
- * @author Jan Poeschko <jpoeschko@wolfram.com>
- *
- * @example
- * // Create a specific logger:
- * const logger = loggers.create("notebook")
- * // and use it:
- * logger.log("Message", 1, 2, 3)
- * // Enable it by default in your config.properties:
- * js.loggers=main,notebook
- *
- * @example
- * // Output a stack trace:
- * loggers.setLevel("trace")
- * logger.trace()
- *
- * @example
- * // Use query parameter to adjust individual logger level.
- * // For example, the following query adjusts the 'boxes' logger to 'debug' level.
- * // <notebookURL>?loggers=boxes=debug
- */
-
 import {each, includes, map, toArray, without} from 'lodash';
 import {contains as stringContains, trim} from 'underscore.string';
 import process from 'process';
