@@ -1,6 +1,17 @@
 {
   "name": "logger-js",
   "version": "1.0.0",
-  "main": "index.js",
-  "license": "MIT"
+  "main": "lib/loggers.js",
+  "types": "lib/loggers.d.ts",
+  "license": "MIT",
+  "files": [
+    "lib/",
+    "README.md"
+  ],
+  "scripts": {
+    "prepublishOnly": "tsc"
+  },
+  "devDependencies": {
+    "typescript": "^4.4.3"
+  }
 }
