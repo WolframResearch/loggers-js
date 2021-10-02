@@ -1,5 +1,5 @@
 {
-  "name": "logger-js",
+  "name": "loggers-js",
   "version": "1.0.0",
   "main": "lib/loggers.js",
   "types": "lib/loggers.d.ts",
