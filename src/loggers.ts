@@ -24,10 +24,8 @@
  * // <notebookURL>?loggers=boxes=debug
  */
 
-/* eslint-disable no-console */
-
-import _ from 'underscore';
-import {contains, trim} from 'underscore.string';
+import {each, contains, map, toArray, without} from 'lodash';
+import {contains as stringContains, trim} from 'underscore.string';
 import process from 'process';
 import globals, {now} from './globals';
 
@@ -40,7 +38,7 @@ const DEBUG = process.env.NODE_ENV !== 'production';
 const levelNames = ['off', 'log', 'error', 'warn', 'info', 'debug', 'trace'];
 
 const LEVEL_TO_NUMBER = {};
-_.each(levelNames, (name, index) => {
+each(levelNames, (name, index) => {
     LEVEL_TO_NUMBER[name] = index + 1;
 });
 
@@ -101,7 +99,7 @@ function levelFromNumber(value) {
     return levelNames[value - 1];
 }
 
-if (_.contains(['LOCAL', 'LOCAL8080', 'DEVEL'], globals.serverCategory)) {
+if (contains(['LOCAL', 'LOCAL8080', 'DEVEL'], globals.serverCategory)) {
     // On devel and localhost, set the logging level to "info".
     // Individual loggers still have to be enabled for messages to actually show up.
     logLevel = levelToNumber('info');
@@ -119,7 +117,7 @@ if (_.contains(['LOCAL', 'LOCAL8080', 'DEVEL'], globals.serverCategory)) {
  * Note that, currently, globals.jsLoggers is empty during server-side rendering. To enable loggers and set log levels
  * for server-side rendering, modify enableDebugLoggers in javascript/notebook/serverRendering.js.
  */
-let enabledLoggers: string[] = _.map((globals.jsLoggers || '').split(','), s => {
+let enabledLoggers: string[] = map((globals.jsLoggers || '').split(','), s => {
     return trim(s);
 });
 
@@ -173,7 +171,7 @@ class Logger {
      */
     constructor(name, options: Options = {}) {
         this.name = name || '';
-        this.enabled = _.contains(enabledLoggers, name);
+        this.enabled = contains(enabledLoggers, name);
         this.level = levelToNumber(options.level || 'log');
         this.pendingAsyncCalls = [];
         this.logLevel = enabledLoggerLevels[name] || null;
@@ -371,7 +369,7 @@ class Logger {
             return args;
         }
 
-        const result = _.toArray(args);
+        const result = toArray(args);
         const date = new Date();
         let prefix = date.toISOString(); // 2011-10-05T14:48:00.000Z
         if (this.name) {
@@ -384,7 +382,7 @@ class Logger {
             result[0] = `${prefix} ${result[0]}`;
         }
 
-        return _.map(result, item => {
+        return map(result, item => {
             if (item && item.isExpr) {
                 return item.toString();
             } else {
@@ -397,16 +395,16 @@ class Logger {
 const params = getLocationParams();
 const loggersSetting = params.loggers || globals.LOGGERS;
 if (loggersSetting) {
-    _.each(loggersSetting.split(','), logger => {
+    each(loggersSetting.split(','), logger => {
         let level = null;
         let loggerName = logger;
-        if (contains(logger, '=')) {
+        if (stringContains(logger, '=')) {
             const parts = logger.split('=');
             loggerName = parts[0];
             level = parts[1];
         }
         if (loggerName.startsWith('!')) {
-            enabledLoggers = _.without(enabledLoggers, loggerName.substr(1));
+            enabledLoggers = without(enabledLoggers, loggerName.substr(1));
         } else {
             enabledLoggers.push(loggerName);
             enabledLoggerLevels[loggerName] = levelToNumber(level);
