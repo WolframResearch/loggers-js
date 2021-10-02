@@ -33,6 +33,10 @@ import globals, {now} from './globals';
 
 import {getLocationParams} from './locationParams';
 
+const IS_SERVER = process.env.IS_SERVER === 'true';
+const TESTING = process.env.TESTING === 'true';
+const DEBUG = process.env.NODE_ENV !== 'production';
+
 const levelNames = ['off', 'log', 'error', 'warn', 'info', 'debug', 'trace'];
 
 const LEVEL_TO_NUMBER = {};
