@@ -436,6 +436,10 @@ export function create(name: string, options: Options = {}) {
     return get(name, options);
 }
 
+export function getLogger(name: string, options: Options = {}) {
+    return get(name, options);
+}
+
 /**
  * Set the logging level, which affects all loggers.
  * Possible values are "off", "log", "error", "warn", "info", "debug", "trace".
